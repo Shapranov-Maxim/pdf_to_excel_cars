@@ -131,7 +131,7 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
     wb = xw.Book(output_xls_path)
     sheet = wb.sheets["Sheet 1"]
 
-    cell_location = "G7"
+    cell_location = "F5"
 
     sheet.pictures.add(
         CAR_IMAGE_FILE_PATH,
