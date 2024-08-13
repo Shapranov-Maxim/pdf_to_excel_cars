@@ -33,7 +33,7 @@ def add_image_to_excel(existing_file_path, image_path, cell_location):
 
 # Get the path to the base.xls file in the package
 BASE_FILE_PATH = pkg_resources.resource_filename(__name__, "base.xls")
-
+CAR_IMAGE_FILE_PATH = pkg_resources.resource_filename(__name__, "car-image.png")
 
 def extract_data_from_pdf(pdf_path, output_xls_path):
     with pdfplumber.open(pdf_path) as pdf:
@@ -131,11 +131,10 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
     wb = xw.Book(output_xls_path)
     sheet = wb.sheets["Sheet 1"]
 
-    image_path = "car-image.png"
-    cell_location = "A1"
+    cell_location = "G7"
 
     sheet.pictures.add(
-        image_path,
+        CAR_IMAGE_FILE_PATH,
         name="Car-Image",
         update=True,
         left=sheet.range(cell_location).left,
