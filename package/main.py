@@ -50,6 +50,7 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
 
     wb = copy(rb)
     w_sheet = wb.get_sheet(0)
+
     base_table_start_end_rows = {"start": 12, "end": 26}
 
     max_lengths = [0] * len(tables[0][0])
@@ -150,6 +151,8 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
 
         if col_index == 0:
             w_sheet.col(col_index + 1).width = 256 * (max_length + 2)
+        if col_index == 2:
+            w_sheet.col(col_index + 1).width = 200 * (max_length + 2)
 
     for row_index, row_data in enumerate(w_sheet.rows):
         height = 300
@@ -165,13 +168,18 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
     wb = xw.Book(output_xls_path)
     sheet = wb.sheets["Sheet 1"]
 
+    sheet.api.PageSetup.LeftFooter = ""
+    sheet.api.PageSetup.TopFooter = ""
+    sheet.api.PageSetup.CenterFooter = ""
+    sheet.api.PageSetup.RightFooter = ""
+
     cell_location = "E3"
 
     sheet.pictures.add(
         CAR_IMAGE_FILE_PATH,
         name="Car-Image",
         update=True,
-        left=sheet.range(cell_location).left,
+        left=sheet.range(cell_location).left - 40,
         top=sheet.range(cell_location).top,
     )
 
