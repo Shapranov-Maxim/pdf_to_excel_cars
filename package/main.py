@@ -152,7 +152,7 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
         if col_index == 0:
             w_sheet.col(col_index + 1).width = 256 * (max_length + 2)
         if col_index == 2:
-            w_sheet.col(col_index + 1).width = 200 * (max_length + 2)
+            w_sheet.col(col_index + 1).width = 11800
 
     for row_index, row_data in enumerate(w_sheet.rows):
         height = 300
@@ -169,9 +169,12 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
     sheet = wb.sheets["Sheet 1"]
 
     sheet.api.PageSetup.LeftFooter = ""
-    sheet.api.PageSetup.TopFooter = ""
     sheet.api.PageSetup.CenterFooter = ""
     sheet.api.PageSetup.RightFooter = ""
+
+    sheet.api.PageSetup.LeftHeader = ""
+    sheet.api.PageSetup.CenterHeader = ""
+    sheet.api.PageSetup.RightHeader = ""
 
     cell_location = "E3"
 
