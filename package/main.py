@@ -78,7 +78,7 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
                     table_header_index + 1,
                     table_header,
                     xlwt.easyxf(
-                        f"font: name Calibri, height 220, bold on; {default_border_style}"
+                        f"font: name Calibri, height 220, bold on; {default_border_style} align: wrap on;"
                     ),
                 )
                 max_lengths[table_header_index] = max(
@@ -115,7 +115,9 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
                         base_table_start_end_rows["start"] + 1 + table_item_index,
                         item_index + 1,
                         data_to_write,
-                        xlwt.easyxf(f"{default_font_style} {default_border_style}"),
+                        xlwt.easyxf(
+                            f"{default_font_style} {default_border_style} align: wrap on;"
+                        ),
                     )
                     max_lengths[item_index] = max(
                         max_lengths[item_index], len(data_str)
@@ -138,11 +140,16 @@ def extract_data_from_pdf(pdf_path, output_xls_path):
                 Formula(
                     f"SUM(G{base_items_table_start_index}:G{base_items_table_start_index + len(table_items) - 1})"
                 ),
-                xlwt.easyxf(f"font: name Calibri, height 220, bold on;"),
+                xlwt.easyxf(
+                    f"font: name Calibri, height 220, bold on; align: wrap on;"
+                ),
             )
 
     for col_index, max_length in enumerate(max_lengths):
-        w_sheet.col(col_index + 1).width = 256 * (max_length + 2)
+        w_sheet.col(col_index + 1).width = 210 * (max_length + 2)
+
+        if col_index == 0:
+            w_sheet.col(col_index + 1).width = 256 * (max_length + 2)
 
     for row_index, row_data in enumerate(w_sheet.rows):
         height = 300
